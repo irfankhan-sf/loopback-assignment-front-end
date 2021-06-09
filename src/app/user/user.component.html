@@ -18,18 +18,60 @@
     <tbody>
       <tr *ngFor="let user of users; index as i">
         <th scope="row">{{ i + 1 }}</th>
-        <td>{{ user.firstName }}</td>
-        <td>{{ user.middleName }}</td>
-        <td>{{ user.lastName }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.phoneNumber }}</td>
-        <td>{{ user.role }}</td>
-        <td>{{ user.address }}</td>
-        <td>{{ user.createdOn }}</td>
-        <td>{{ user.updatedOn }}</td>
-        <td>{{ user.isEdit }}</td>
+        <ng-template [ngIf]="!user.isEdit" [ngIfElse]="editMode">
+          <td>
+            {{ user.firstName }}
+          </td>
+          <td>{{ user.middleName }}</td>
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phoneNumber }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.address }}</td>
+          <td>{{ user.createdOn }}</td>
+          <td>{{ user.updatedOn }}</td>
+          <td>
+            <div class="action-section">
+              <fa-icon class="action-btn" [icon]="faEdit" (click)="onEdit(user)"></fa-icon>
+              <fa-icon class="action-btn" [icon]="faTrashAlt" (click)="onDelete(user)"></fa-icon>
+            </div>
+          </td>
+        </ng-template>
+
+        <ng-template #editMode>
+          <td>
+            <input type="text" class="form-control" [(ngModel)]="user.firstName" />
+          </td>
+          <td>
+            <input type="text" class="form-control" [(ngModel)]="user.middleName" />
+          </td>
+          <td>
+            <input type="text" class="form-control" [(ngModel)]="user.lastName" />
+          </td>
+          <td>
+            <input type="text" class="form-control" [(ngModel)]="user.email" />
+          </td>
+          <td>
+            <input type="text" class="form-control" [(ngModel)]="user.phoneNumber" />
+          </td>
+          <td>
+            <input type="text" class="form-control" [(ngModel)]="user.role" />
+          </td>
+          <td>
+            <input type="text" class="form-control" [(ngModel)]="user.address" />
+          </td>
+          <td>{{ user.createdOn }}</td>
+          <td>{{ user.updatedOn }}</td>
+          <td>
+            <div class="action-section">
+              <fa-icon class="action-btn" [icon]="faSave" (click)="onSave(user)"></fa-icon>
+              <fa-icon class="action-btn" [icon]="faTimes" (click)="onCancelEdit(user)"></fa-icon>
+            </div>
+          </td>
+        </ng-template>
+
       </tr>
     </tbody>
   </table>
-  
+
 </div>

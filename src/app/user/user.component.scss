@@ -1,0 +1,13 @@
+.action-section{
+    display: flex;
+    & .action-btn{
+        height: 20px;
+        width: 20px;
+        margin-left: 10px;
+    }
+
+    & .action-btn:hover{
+        opacity: 0.8;
+        cursor: pointer;
+    }
+}
