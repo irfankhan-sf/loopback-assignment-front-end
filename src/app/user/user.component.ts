@@ -10,6 +10,7 @@ import { faEdit, faTimes, faTrashAlt, faSave } from '@fortawesome/free-solid-svg
 export class UserComponent implements OnInit {
 
   users:User[] = [];
+  editUserData : { [userId: number]: User }={}
   faEdit=faEdit;
   faTimes=faTimes;
   faTrashAlt=faTrashAlt;
@@ -26,19 +27,24 @@ export class UserComponent implements OnInit {
   }
 
   onEdit(user: User):void{
+    this.editUserData[user.id]={...user};
     user.isEdit = true;
   }
 
   onCancelEdit(user: User):void{
+    delete this.editUserData[user.id];
     user.isEdit = false;
   }
 
   onDelete(user: User):void{
-
+    this.users = this.users.filter(currUser=> currUser.id !== user.id);
   }
 
   onSave(user: User):void{
-
+    Object.assign(user, this.editUserData[user.id]);
+    // user = ...this.editUserData[user.id];
+    // delete this.editUserData[user.id];
+    user.isEdit = false;
   }
 
 }

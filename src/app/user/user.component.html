@@ -40,28 +40,28 @@
 
         <ng-template #editMode>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="user.firstName" />
+            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].firstName" required/>
           </td>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="user.middleName" />
+            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].middleName" />
           </td>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="user.lastName" />
+            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].lastName" />
           </td>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="user.email" />
+            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].email" required/>
           </td>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="user.phoneNumber" />
+            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].phoneNumber" />
           </td>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="user.role" />
+            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].role" required/>
           </td>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="user.address" />
+            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].address" />
           </td>
-          <td>{{ user.createdOn }}</td>
-          <td>{{ user.updatedOn }}</td>
+          <td>{{ editUserData[user.id].createdOn }}</td>
+          <td>{{ editUserData[user.id].updatedOn }}</td>
           <td>
             <div class="action-section">
               <fa-icon class="action-btn" [icon]="faSave" (click)="onSave(user)"></fa-icon>
