@@ -32,16 +32,19 @@
           <td>{{ user.updatedOn }}</td>
           <td>
             <div class="action-section">
-              <fa-icon class="action-btn" [icon]="faEdit" (click)="onEdit(user)"></fa-icon>
-              <fa-icon class="action-btn" [icon]="faTrashAlt" (click)="onDelete(user)"></fa-icon>
+              <fa-icon class="action-btn" title="Edit" [icon]="faEdit" (click)="onEdit(user)"></fa-icon>
+              <fa-icon class="action-btn" title="Delete" [icon]="faTrashAlt" (click)="onDelete(user)"></fa-icon>
             </div>
           </td>
         </ng-template>
 
         <ng-template #editMode>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].firstName" required/>
-          </td>
+            <input type="text" class="form-control" [ngClass]="{'is-invalid':(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid && userErrorMsg[user.id]?.firstName)}" (keyup)="validateInput(editUserData[user.id])" [(ngModel)]="editUserData[user.id].firstName" required/>
+            <div *ngIf="(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid && userErrorMsg[user.id]?.firstName)"  class="invalid-feedback">
+                {{userErrorMsg[user.id]?.firstName}}
+            </div>
+        </td>
           <td>
             <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].middleName" />
           </td>
@@ -49,14 +52,20 @@
             <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].lastName" />
           </td>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].email" required/>
-          </td>
+            <input type="text" class="form-control"  [ngClass]="{'is-invalid':(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid && userErrorMsg[user.id]?.email)}" (keyup)="validateInput(editUserData[user.id])" [(ngModel)]="editUserData[user.id].email" required/>
+            <div *ngIf="(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid && userErrorMsg[user.id]?.email)"  class="invalid-feedback">
+                {{userErrorMsg[user.id]?.email}}
+            </div>
+            </td>
           <td>
             <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].phoneNumber" />
           </td>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].role" required/>
-          </td>
+            <input type="text" class="form-control" [ngClass]="{'is-invalid':(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid && userErrorMsg[user.id]?.role)}" (keyup)="validateInput(editUserData[user.id])" [(ngModel)]="editUserData[user.id].role" required/>
+            <div *ngIf="(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid && userErrorMsg[user.id]?.role)"  class="invalid-feedback">
+                {{userErrorMsg[user.id]?.role}}
+            </div>
+        </td>
           <td>
             <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].address" />
           </td>
@@ -64,8 +73,8 @@
           <td>{{ editUserData[user.id].updatedOn }}</td>
           <td>
             <div class="action-section">
-              <fa-icon class="action-btn" [icon]="faSave" (click)="onSave(user)"></fa-icon>
-              <fa-icon class="action-btn" [icon]="faTimes" (click)="onCancelEdit(user)"></fa-icon>
+              <fa-icon class="action-btn" title="save" [icon]="faSave" (click)="onSave(user)" [ngClass]="{'disabled':(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid)}"></fa-icon>
+              <fa-icon class="action-btn" title="cancel" [icon]="faTimes" (click)="onCancelEdit(user)"></fa-icon>
             </div>
           </td>
         </ng-template>
