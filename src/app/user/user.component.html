@@ -26,7 +26,7 @@
           <td>{{ user.lastName }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.phoneNumber }}</td>
-          <td>{{ user.role }}</td>
+          <td>{{ role[user.role] }}</td>
           <td>{{ user.address }}</td>
           <td>{{ user.createdOn }}</td>
           <td>{{ user.updatedOn }}</td>
@@ -40,25 +40,28 @@
 
         <ng-template #editMode>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].firstName" required/>
+            <input type="text" class="form-control" placeholder="First name" [(ngModel)]="editUserData[user.id].firstName" required/>
           </td>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].middleName" />
+            <input type="text" class="form-control" placeholder="Middle Name" [(ngModel)]="editUserData[user.id].middleName" />
           </td>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].lastName" />
+            <input type="text" class="form-control" placeholder="Last Name" [(ngModel)]="editUserData[user.id].lastName" />
           </td>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].email" required/>
+            <input type="text" class="form-control" placeholder="Email" [(ngModel)]="editUserData[user.id].email" required/>
           </td>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].phoneNumber" />
+            <input type="text" class="form-control" placeholder="Phone Number" [(ngModel)]="editUserData[user.id].phoneNumber" />
           </td>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].role" required/>
+            <select class="form-control" [(ngModel)]="editUserData[user.id].role">
+              <option value="" disabled>Select role</option>
+              <option *ngFor="let item of role | enumToArray" [value]="item.key">{{item.value}}</option>
+            </select>
           </td>
           <td>
-            <input type="text" class="form-control" [(ngModel)]="editUserData[user.id].address" />
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="editUserData[user.id].address" />
           </td>
           <td>{{ editUserData[user.id].createdOn }}</td>
           <td>{{ editUserData[user.id].updatedOn }}</td>

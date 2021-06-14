@@ -1,6 +1,7 @@
 import { User } from '../types/User';
 
-export const USERS: User[] = [
+
+export const USERS:User[] = [
   {
     id: 1,
     firstName: 'Marlon',
@@ -8,7 +9,7 @@ export const USERS: User[] = [
     lastName: 'Lay',
     email: 'alay0@acquirethisname.com',
     phoneNumber: 6466763226,
-    role: 'Construction Manager',
+    role:0,
     address: '3309 Roth Hill',
     createdOn: '2021-04-20 21:48:57',
     updatedOn: '2021-05-13 15:53:48',
@@ -20,7 +21,7 @@ export const USERS: User[] = [
     lastName: 'Shimuk',
     email: 'sshimuk1@wikipedia.org',
     phoneNumber: 9673370348,
-    role: 'Surveyor',
+    role: 1,
     address: '9653 Maple Circle',
     createdOn: '2020-07-13 19:48:53',
     updatedOn: '2020-06-27 10:19:12',
@@ -32,7 +33,7 @@ export const USERS: User[] = [
     lastName: 'Lehenmann',
     email: 'rlehenmann2@nbcnews.com',
     phoneNumber: 4819652532,
-    role: 'Electrician',
+    role: 2,
     address: '84 Shopko Court',
     createdOn: '2021-03-02 03:32:49',
     updatedOn: '2020-06-22 14:04:40',
@@ -44,7 +45,7 @@ export const USERS: User[] = [
     lastName: 'Ambrozewicz',
     email: 'sambrozewicz3@yahoo.co.jp',
     phoneNumber: 1208593919,
-    role: 'Construction Foreman',
+    role: 2,
     address: '6 Del Sol Parkway',
     createdOn: '2020-08-20 09:27:24',
     updatedOn: '2020-06-11 12:46:12',
@@ -56,7 +57,7 @@ export const USERS: User[] = [
     lastName: 'Meadway',
     email: 'bmeadway4@tripadvisor.com',
     phoneNumber: 1208598989,
-    role: 'Architect',
+    role: 0,
     address: '19330 Ludington Crossing',
     createdOn: '2021-03-21 17:53:18',
     updatedOn: '2020-07-17 13:20:26',

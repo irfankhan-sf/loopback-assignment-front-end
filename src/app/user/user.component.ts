@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../@shared/types/User';
 import { UserService } from "../@shared/services/user.service";
 import { faEdit, faTimes, faTrashAlt, faSave } from '@fortawesome/free-solid-svg-icons';
+import { Role } from "../@shared/types/Role";
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -15,6 +16,7 @@ export class UserComponent implements OnInit {
   faTimes=faTimes;
   faTrashAlt=faTrashAlt;
   faSave=faSave;
+  role= Role;
   constructor(private userService:UserService) { }
 
   ngOnInit(): void {

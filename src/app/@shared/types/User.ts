@@ -1,3 +1,4 @@
+import { Role } from "./Role";
 export interface User {
     id:number,
     firstName: string,
@@ -5,7 +6,7 @@ export interface User {
     lastName: string,
     email:string,
     phoneNumber: number,
-    role:string,
+    role:Role,
     address:string,
     createdOn:string,
     updatedOn:string,
