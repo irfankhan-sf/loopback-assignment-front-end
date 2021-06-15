@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {DatePipe} from '@angular/common';
+import { faEdit, faTimes, faTrashAlt, faSave } from '@fortawesome/free-solid-svg-icons';
+
 import { User,UserError } from '../@shared/types/User';
 import { UserService } from "../@shared/services/user.service";
-import { faEdit, faTimes, faTrashAlt, faSave } from '@fortawesome/free-solid-svg-icons';
 import { Role } from "../@shared/types/Role";
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -18,10 +21,17 @@ export class UserComponent implements OnInit {
   faTrashAlt=faTrashAlt;
   faSave=faSave;
   role= Role;
-  constructor(private userService:UserService) { }
+  constructor(
+    private userService:UserService,
+    private datePipe: DatePipe,
+    ) { }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe( users =>{
+    this.getUser();
+  }
+
+  getUser(){
+    this.userService.findAll().subscribe( users =>{
       users.forEach(user=>{
         user.isEdit = false;
       });
@@ -45,24 +55,31 @@ export class UserComponent implements OnInit {
   }
 
   onSave(user: User):void{
-    Object.assign(user, this.editUserData[user.id]);
-    user.isEdit = false;
+    let updateUser:any = this.editUserData[user.id]
+    updateUser.updated_at = this.datePipe.transform(new Date(),"YYYY-MM-ddTHH:mm:ssZ") || "";
+    delete updateUser.id;
+    delete updateUser.isEdit;
+    this.userService.update(user.id,updateUser).subscribe( users =>{
+      console.log(users);
+      Object.assign(user, this.editUserData[user.id]);
+      user.isEdit = false;
+    })
   }
 
   validateInput(user: User): void{
     const errorMsg:UserError = {
-      firstName: "",
-      middleName: "",
-      lastName: "",
+      first_name: "",
+      middle_name: "",
+      last_name: "",
       email:"",
-      phoneNumber: "",
+      phone_number: "",
       role:"",
       address:"",
       isValid:true,
     }
     let isValid = true 
-    if (this.isEmpty(user.firstName.trim())) {
-      errorMsg.firstName = "First name is required";
+    if (this.isEmpty(user.first_name.trim())) {
+      errorMsg.first_name = "First name is required";
       isValid = false; 
     }
     if (this.isEmpty(user.email.trim())) {

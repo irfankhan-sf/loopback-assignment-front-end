@@ -20,16 +20,16 @@
         <th scope="row">{{ i + 1 }}</th>
         <ng-template [ngIf]="!user.isEdit" [ngIfElse]="editMode">
           <td>
-            {{ user.firstName }}
+            {{ user.first_name }}
           </td>
-          <td>{{ user.middleName }}</td>
-          <td>{{ user.lastName }}</td>
+          <td>{{ user.middle_name }}</td>
+          <td>{{ user.last_name }}</td>
           <td>{{ user.email }}</td>
-          <td>{{ user.phoneNumber }}</td>
+          <td>{{ user.phone_number }}</td>
           <td>{{ role[user.role] }}</td>
           <td>{{ user.address }}</td>
-          <td>{{ user.createdOn }}</td>
-          <td>{{ user.updatedOn }}</td>
+          <td>{{ user.created_at }}</td>
+          <td>{{ user.updated_at }}</td>
           <td>
             <div class="action-section">
               <fa-icon class="action-btn" title="Edit" [icon]="faEdit" (click)="onEdit(user)"></fa-icon>
@@ -40,16 +40,16 @@
 
         <ng-template #editMode>
           <td>
-            <input type="text" class="form-control" [ngClass]="{'is-invalid':(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid && userErrorMsg[user.id]?.firstName)}" (keyup)="validateInput(editUserData[user.id])" [(ngModel)]="editUserData[user.id].firstName" required/>
-            <div *ngIf="(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid && userErrorMsg[user.id]?.firstName)"  class="invalid-feedback">
-                {{userErrorMsg[user.id]?.firstName}}
+            <input type="text" class="form-control" [ngClass]="{'is-invalid':(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid && userErrorMsg[user.id]?.first_name)}" (keyup)="validateInput(editUserData[user.id])" [(ngModel)]="editUserData[user.id].first_name" required/>
+            <div *ngIf="(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid && userErrorMsg[user.id]?.first_name)"  class="invalid-feedback">
+                {{userErrorMsg[user.id]?.first_name}}
             </div>
         </td>
           <td>
-            <input type="text" class="form-control" placeholder="Middle Name" [(ngModel)]="editUserData[user.id].middleName" />
+            <input type="text" class="form-control" placeholder="Middle Name" [(ngModel)]="editUserData[user.id].middle_name" />
           </td>
           <td>
-            <input type="text" class="form-control" placeholder="Last Name" [(ngModel)]="editUserData[user.id].lastName" />
+            <input type="text" class="form-control" placeholder="Last Name" [(ngModel)]="editUserData[user.id].last_name" />
           </td>
           <td>
             <input type="text" class="form-control"  [ngClass]="{'is-invalid':(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid && userErrorMsg[user.id]?.email)}" (keyup)="validateInput(editUserData[user.id])" [(ngModel)]="editUserData[user.id].email" required/>
@@ -58,7 +58,7 @@
             </div>
             </td>
           <td>
-            <input type="text" class="form-control" placeholder="Phone Number" [(ngModel)]="editUserData[user.id].phoneNumber" />
+            <input type="text" class="form-control" placeholder="Phone Number" [(ngModel)]="editUserData[user.id].phone_number" />
           </td>
           <td>
             <select class="form-control" [(ngModel)]="editUserData[user.id].role" [ngClass]="{'is-invalid':(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid && userErrorMsg[user.id]?.role)}" (ngModelChange)="validateInput(editUserData[user.id])">
@@ -72,8 +72,8 @@
           <td>
             <input type="text" class="form-control" placeholder="" [(ngModel)]="editUserData[user.id].address" />
           </td>
-          <td>{{ editUserData[user.id].createdOn }}</td>
-          <td>{{ editUserData[user.id].updatedOn }}</td>
+          <td>{{ editUserData[user.id].created_at }}</td>
+          <td>{{ editUserData[user.id].updated_at }}</td>
           <td>
             <div class="action-section">
               <fa-icon class="action-btn" title="save" [icon]="faSave" (click)="onSave(user)" [ngClass]="{'disabled':(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid)}"></fa-icon>

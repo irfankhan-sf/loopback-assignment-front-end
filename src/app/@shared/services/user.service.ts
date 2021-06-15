@@ -9,10 +9,13 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService  {
+export class UserService extends CrudService<User,number> {
 
- 
-  getUsers():Observable<User[]>{
-    return of(USERS)
-  }
+ constructor(protected _http:HttpClient){
+    super(_http, `${environment.baseUrl}/users`);
+ }
+
+  // findAll():Observable<User[]>{
+  //   return of(USERS)
+  // }
 }
