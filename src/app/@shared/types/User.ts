@@ -1,5 +1,5 @@
 import { Role } from "./Role";
-export interface User {
+export interface IUser {
     id:number,
     first_name: string,
     middle_name: string,
@@ -13,7 +13,7 @@ export interface User {
     isEdit?:boolean,
 }
 
-export interface UserError {
+export interface IUserError {
     first_name: string,
     middle_name: string,
     last_name: string,
@@ -23,3 +23,4 @@ export interface UserError {
     address:string,
     isValid:boolean,
 }
+

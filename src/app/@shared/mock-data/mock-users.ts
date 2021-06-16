@@ -1,7 +1,7 @@
-import { User } from '../types/User';
+import { IUser } from '../types/User';
 
 
-export const USERS:User[] = [
+export const USERS:IUser[] = [
   {
     id: 1,
     first_name: 'Marlon',

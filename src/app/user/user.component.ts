@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {DatePipe} from '@angular/common';
 import { faEdit, faTimes, faTrashAlt, faSave } from '@fortawesome/free-solid-svg-icons';
 
-import { User,UserError } from '../@shared/types/User';
+import { IUser,IUserError } from '../@shared/types/User';
 import { UserService } from "../@shared/services/user.service";
 import { Role } from "../@shared/types/Role";
-
+import { DateTimeDecorator } from "../@shared/decorators/date-time.decorator";
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -13,9 +13,9 @@ import { Role } from "../@shared/types/Role";
 })
 export class UserComponent implements OnInit {
 
-  users:User[] = [];
-  editUserData : { [userId: number]: User }={}
-  userErrorMsg : { [userId: number]: UserError }={}
+  users:IUser[] = [];
+  editUserData : { [userId: number]: IUser }={}
+  userErrorMsg : { [userId: number]: IUserError }={}
   faEdit=faEdit;
   faTimes=faTimes;
   faTrashAlt=faTrashAlt;
@@ -31,30 +31,28 @@ export class UserComponent implements OnInit {
   }
 
   getUser(){
+    debugger;
     this.userService.findAll().subscribe( users =>{
-      users.forEach(user=>{
-        user.isEdit = false;
-      });
       this.users = users;
     })
   }
 
-  onEdit(user: User):void{
+  onEdit(user: IUser):void{
     this.editUserData[user.id]={...user};
     user.isEdit = true;
   }
 
-  onCancelEdit(user: User):void{
+  onCancelEdit(user: IUser):void{
     delete this.editUserData[user.id];
     delete this.userErrorMsg[user.id];
     user.isEdit = false;
   }
 
-  onDelete(user: User):void{
+  onDelete(user: IUser):void{
     this.users = this.users.filter(currUser=> currUser.id !== user.id);
   }
 
-  onSave(user: User):void{
+  onSave(user: IUser):void{
     let updateUser:any = this.editUserData[user.id]
     updateUser.updated_at = this.datePipe.transform(new Date(),"YYYY-MM-ddTHH:mm:ssZ") || "";
     delete updateUser.id;
@@ -66,8 +64,8 @@ export class UserComponent implements OnInit {
     })
   }
 
-  validateInput(user: User): void{
-    const errorMsg:UserError = {
+  validateInput(user: IUser): void{
+    const errorMsg:IUserError = {
       first_name: "",
       middle_name: "",
       last_name: "",
