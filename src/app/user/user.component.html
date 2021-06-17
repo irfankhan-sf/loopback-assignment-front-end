@@ -12,12 +12,57 @@
         <th scope="col">address</th>
         <th scope="col">created on</th>
         <th scope="col">modified on</th>
-        <th scope="col"></th>
+        <th scope="col"><button *ngIf="!addUserData" type="button" class="btn btn-primary" (click)="onAdd()">+ Add</button></th>
       </tr>
     </thead>
     <tbody>
+      <tr *ngIf="addUserData">
+        <th scope="row"></th>
+        <td>
+          <input type="text" class="form-control" [ngClass]="{'is-invalid':(userErrorMsg[addUserData.id] && !userErrorMsg[addUserData.id]?.isValid && userErrorMsg[addUserData.id]?.first_name)}" (keyup)="validateInput(editUserData[addUserData.id])" [(ngModel)]="editUserData[addUserData.id].first_name" required/>
+          <div *ngIf="(userErrorMsg[addUserData.id] && !userErrorMsg[addUserData.id]?.isValid && userErrorMsg[addUserData.id]?.first_name)"  class="invalid-feedback">
+              {{userErrorMsg[addUserData.id]?.first_name}}
+          </div>
+      </td>
+        <td>
+          <input type="text" class="form-control" placeholder="Middle Name" [(ngModel)]="editUserData[addUserData.id].middle_name" />
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="Last Name" [(ngModel)]="editUserData[addUserData.id].last_name" />
+        </td>
+        <td>
+          <input type="text" class="form-control"  [ngClass]="{'is-invalid':(userErrorMsg[addUserData.id] && !userErrorMsg[addUserData.id]?.isValid && userErrorMsg[addUserData.id]?.email)}" (keyup)="validateInput(editUserData[addUserData.id])" [(ngModel)]="editUserData[addUserData.id].email" required/>
+          <div *ngIf="(userErrorMsg[addUserData.id] && !userErrorMsg[addUserData.id]?.isValid && userErrorMsg[addUserData.id]?.email)"  class="invalid-feedback">
+              {{userErrorMsg[addUserData.id]?.email}}
+          </div>
+          </td>
+        <td>
+          <input type="text" class="form-control" placeholder="Phone Number" (keypress)="numberOnly($event)" [(ngModel)]="editUserData[addUserData.id].phone_number" />
+        </td>
+        <td>
+          <select class="form-control" [(ngModel)]="editUserData[addUserData.id].role" [ngClass]="{'is-invalid':(userErrorMsg[addUserData.id] && !userErrorMsg[addUserData.id]?.isValid && userErrorMsg[addUserData.id]?.role)}" (ngModelChange)="validateInput(editUserData[addUserData.id])">
+            <option value="" disabled>Select role</option>
+            <option *ngFor="let item of role | enumToArray" [ngValue]="item.key">{{item.value}}</option>
+          </select>
+          <div *ngIf="(userErrorMsg[addUserData.id] && !userErrorMsg[addUserData.id]?.isValid && userErrorMsg[addUserData.id]?.role)"  class="invalid-feedback">
+              {{userErrorMsg[addUserData.id]?.role}}
+          </div>
+      </td>
+        <td>
+          <input type="text" class="form-control" placeholder="" [(ngModel)]="editUserData[addUserData.id].address" />
+        </td>
+        <td>{{ editUserData[addUserData.id].created_at }}</td>
+        <td>{{ editUserData[addUserData.id].updated_at }}</td>
+        <td>
+          <div class="action-section">
+            <fa-icon class="action-btn" title="save" [icon]="faSave" (click)="onSave()" [ngClass]="{'disabled':(userErrorMsg[addUserData.id] && !userErrorMsg[addUserData.id]?.isValid)}"></fa-icon>
+            <fa-icon class="action-btn" title="cancel" [icon]="faTimes" (click)="onCancelAdd()"></fa-icon>
+          </div>
+        </td>
+      </tr>
       <tr *ngFor="let user of users; index as i">
         <th scope="row">{{ i + 1 }}</th>
+      
         <ng-template [ngIf]="!user.isEdit" [ngIfElse]="editMode">
           <td>
             {{ user.first_name }}
@@ -58,12 +103,12 @@
             </div>
             </td>
           <td>
-            <input type="text" class="form-control" placeholder="Phone Number" [(ngModel)]="editUserData[user.id].phone_number" />
+            <input type="text" class="form-control" placeholder="Phone Number"  (keypress)="numberOnly($event)" [(ngModel)]="editUserData[user.id].phone_number" />
           </td>
           <td>
             <select class="form-control" [(ngModel)]="editUserData[user.id].role" [ngClass]="{'is-invalid':(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid && userErrorMsg[user.id]?.role)}" (ngModelChange)="validateInput(editUserData[user.id])">
               <option value="" disabled>Select role</option>
-              <option *ngFor="let item of role | enumToArray" [value]="item.key">{{item.value}}</option>
+              <option *ngFor="let item of role | enumToArray" [ngValue]=item.key>{{item.value}}</option>
             </select>
             <div *ngIf="(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid && userErrorMsg[user.id]?.role)"  class="invalid-feedback">
                 {{userErrorMsg[user.id]?.role}}
@@ -76,7 +121,7 @@
           <td>{{ editUserData[user.id].updated_at }}</td>
           <td>
             <div class="action-section">
-              <fa-icon class="action-btn" title="save" [icon]="faSave" (click)="onSave(user)" [ngClass]="{'disabled':(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid)}"></fa-icon>
+              <fa-icon class="action-btn" title="save" [icon]="faSave" (click)="onUpdate(user)" [ngClass]="{'disabled':(userErrorMsg[user.id] && !userErrorMsg[user.id]?.isValid)}"></fa-icon>
               <fa-icon class="action-btn" title="cancel" [icon]="faTimes" (click)="onCancelEdit(user)"></fa-icon>
             </div>
           </td>

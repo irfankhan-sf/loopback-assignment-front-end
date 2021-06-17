@@ -5,7 +5,7 @@ export interface IUser {
     middle_name: string,
     last_name: string,
     email:string,
-    phone_number: number,
+    phone_number: string,
     role:Role,
     address:string,
     created_at:string,
