@@ -6,6 +6,7 @@ import { IUser,IUserError } from '../@shared/types/User';
 import { UserService } from "../@shared/services/user.service";
 import { Role } from "../@shared/types/Role";
 import { DateTimeDecorator } from "../@shared/decorators/date-time.decorator";
+import { User } from '../@shared/model/User';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -16,6 +17,7 @@ export class UserComponent implements OnInit {
   users:IUser[] = [];
   editUserData : { [userId: number]: IUser }={}
   userErrorMsg : { [userId: number]: IUserError }={}
+  addUserData?:IUser;
   faEdit=faEdit;
   faTimes=faTimes;
   faTrashAlt=faTrashAlt;
@@ -31,9 +33,45 @@ export class UserComponent implements OnInit {
   }
 
   getUser(){
-    debugger;
     this.userService.findAll().subscribe( users =>{
       this.users = users;
+    })
+  }
+
+  onAdd():void{
+    const user= new User({
+      id: 0,
+      first_name: '',
+      middle_name: '',
+      last_name: '',
+      email: '',
+      phone_number: '',
+      role:0,
+      address: '',
+      created_at: this.datePipe.transform(new Date(),"YYYY-MM-ddTHH:mm:ssZ") || "",
+      updated_at: this.datePipe.transform(new Date(),"YYYY-MM-ddTHH:mm:ssZ") || "",
+    });
+    
+    this.editUserData[0]={...user};
+    this.addUserData =user;
+  }
+
+  onCancelAdd():void{
+    delete this.userErrorMsg[0];
+    delete this.editUserData[0];
+    this.addUserData=undefined;
+  }
+
+  onSave(){
+    let addUser:any = this.editUserData[0]
+    addUser.updated_at = this.datePipe.transform(new Date(),"YYYY-MM-ddTHH:mm:ssZ") || "";
+    addUser.created_at = this.datePipe.transform(new Date(),"YYYY-MM-ddTHH:mm:ssZ") || "";
+    addUser.role = Number(addUser.role);
+    delete addUser.id;
+    delete addUser.isEdit;
+    this.userService.save(addUser).subscribe( users =>{
+      this.getUser();
+      this.onCancelAdd();
     })
   }
 
@@ -49,10 +87,13 @@ export class UserComponent implements OnInit {
   }
 
   onDelete(user: IUser):void{
-    this.users = this.users.filter(currUser=> currUser.id !== user.id);
+    this.userService.delete(user.id).subscribe( success=>{
+      this.getUser();
+    })
+    // this.users = this.users.filter(currUser=> currUser.id !== user.id);
   }
 
-  onSave(user: IUser):void{
+  onUpdate(user: IUser):void{
     let updateUser:any = this.editUserData[user.id]
     updateUser.updated_at = this.datePipe.transform(new Date(),"YYYY-MM-ddTHH:mm:ssZ") || "";
     delete updateUser.id;
@@ -104,6 +145,15 @@ export class UserComponent implements OnInit {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let result = re.test(String(email).toLowerCase());
     return result;
+  }
+
+  numberOnly(event:any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
   }
 
 
